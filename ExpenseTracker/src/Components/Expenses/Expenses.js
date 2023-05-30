@@ -3,6 +3,7 @@ import Card from "../Molecules/Card";
 import ExpenseItem from "./ExpenseItem";
 import "./Expenses.css";
 import ExpensesFilter from "./ExpensesFilter";
+import ExpenseChart from "./ExpenseChart";
 
 export default function Expenses(props) {
   const [filteredYear, setFilteredYear] = useState("2025");
@@ -27,6 +28,7 @@ export default function Expenses(props) {
         selected={filteredYear}
         onChangeFilter={filterChangeHandler}
       />
+      <ExpenseChart expense={filteredExpense} />
       {expenseContent}
     </Card>
   );
