@@ -14,12 +14,39 @@ import MovieDetails from "./components/Main/WatchedMovie/MovieDetails";
 const KEY = "b0baf1e6";
 
 function App() {
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(function () {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
   const [movies, SetMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("hero");
   const [selectedId, setSelectedId] = useState("");
+
+  const handleDelete = (id) => {
+    const updatedList = watched.filter((movieId) => movieId.imdbID !== id);
+    setWatched(updatedList);
+  };
+
+  const handleSelectMovie = (id) => {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  };
+
+  const handleAddWatched = (movie) => {
+    setWatched((watched) => [...watched, movie]);
+  };
+
+  const handleClose = () => {
+    setSelectedId(null);
+  };
+
+  useEffect(
+    function () {
+      localStorage.setItem("watched", JSON.stringify(watched));
+    },
+    [watched]
+  );
 
   useEffect(
     function () {
@@ -58,23 +85,6 @@ function App() {
     },
     [query]
   );
-
-  const handleDelete = (id) => {
-    const updatedList = watched.filter((movieId) => movieId.imdbID !== id);
-    setWatched(updatedList);
-  };
-
-  const handleSelectMovie = (id) => {
-    setSelectedId((selectedId) => (id === selectedId ? null : id));
-  };
-
-  const handleAddWatched = (movie) => {
-    setWatched((watched) => [...watched, movie]);
-  };
-
-  const handleClose = () => {
-    setSelectedId(null);
-  };
 
   return (
     <div className="App">
