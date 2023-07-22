@@ -18,6 +18,7 @@ function App() {
   const [selectedId, setSelectedId] = useState(null);
   const { movies, isLoading, error } = useMovies(query);
   const [watched, setWatched] = useLocalStorageState([], "watched");
+  //code
 
   function handleDelete(id) {
     const updatedList = watched.filter((movieId) => movieId.imdbID !== id);
